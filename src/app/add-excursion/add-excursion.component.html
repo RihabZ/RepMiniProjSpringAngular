@@ -1,0 +1,85 @@
+<form class="form">
+    <h2>Add Excursion </h2>
+    <div hidden class="form-group">
+        <label for="email">Id Excursion</label>
+        <div class="relative">
+            <input [(ngModel)]="newExcursion.idExcursion" name="id" class="form-control" id="name" type="number" pattern="[a-zA-Z\s]+" required="" autofocus="" title="Username should only contain letters. e.g. Piyush Gupta" autocomplete="" placeholder="Type your id here...">
+           
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="email">destination Excursion:</label>
+        <div class="relative">
+            <input [(ngModel)]="newExcursion.distinationExcursion" name="distinationExcursion" class="form-control" type="url" pattern="https?://.+" required="" placeholder="Mention your destination ...">
+          
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="email">Prix Excursion:</label>
+      <div class="relative">
+          <input class="form-control" [(ngModel)]="newExcursion.prixExcursion" name="prixExcursion" type="text" id="tags" required="" placeholder="Type your price">
+        
+      </div>
+  </div>
+
+  
+   
+    <div class="form-group">
+        <label for="email">  Date Excursion </label>
+        <div class="relative">
+            <input [(ngModel)]="newExcursion.dateExcursion" name="dateExcursion" class="form-control" type="date"  required="" placeholder="Type your start date Number...">
+           
+        </div>
+    </div>
+   
+    <div class="form-group">
+        <label for="email"> Heure de Depart</label>
+        <div class="relative">
+            <input [(ngModel)]="newExcursion.heureDepart" name="dateFin" class="form-control" type="text"  required="" placeholder="Type your start time Number...">
+       
+        </div>
+    </div>
+      
+
+    <div class="form-group">
+        <label for="email"> Heure d ' Arrivée</label>
+        <div class="relative">
+            <input [(ngModel)]="newExcursion.heureRetour" name="heureRetour" class="form-control" type="text"  required="" placeholder="Type your end time Number...">
+        
+        </div>
+    </div>
+      
+    
+    <div class="form-group">
+        <label for="email"> Lieu de Depart</label>
+        <div class="relative">
+            <input [(ngModel)]="newExcursion.lieuDepart" name="lieuDepart" class="form-control" type="text"  required="" placeholder="Type your start place...">
+        
+        </div>
+    </div>
+
+  
+    <div class="form-group">
+        <label>Type Excursion</label>
+        <div class="relative">
+        <select class="form-control form-control-lg" id="idType" name="idType"
+        [(ngModel)]="newIdType">
+         <option *ngFor="let type of types" [value]="type.idType" >
+         {{type.nomType}}
+        </option>
+        </select>
+        </div>
+        </div> 
+    <div class="form-group">
+        <div class="tright">
+          <button class="btn btn-warning" type="reset"><i class="fa fa-fw fa-refresh"></i> Reset</button>
+          <button (click)="addExcursion()" class="btn btn-success" type="submit">Submit <i class="fa fa-fw fa-paper-plane"></i></button>
+        </div>
+      </div>
+    
+    
+    <div >
+      
+      <h4><small>{{message}}</small></h4>
+    </div>
+</form>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Excursion App</title>
+    <style>
+        body {
+            color: #404E67;
+            background: #F5F7FA;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .table-wrapper {
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        }
+
+        .table-title {
+            padding-bottom: 10px;
+            margin: 0 0 10px;
+        }
+
+        .table-title h2 {
+            margin: 6px 0 0;
+            font-size: 22px;
+        }
+
+        table.table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table.table th,
+        table.table td {
+            border: 1px solid #e9e9e9;
+            padding: 8px;
+            text-align: center;
+        }
+
+        table.table th {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+        table.table td a {
+            display: inline-block;
+            min-width: 32px;
+            margin-right: 5px;
+        }
+
+        table.table td i {
+            font-size: 18px;
+        }
+
+        table.table .edit i {
+            color: #FFC107;
+            /* Couleur jaune pour l'édition */
+        }
+
+        table.table .delete i {
+            color: #DC3545;
+            /* Couleur rouge pour la suppression */
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Add Bootstrap CSS link here -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-4 col-md-4 col-lg-4 mb-4">
+                <label>Types </label>
+                <select class="form-control form-control-lg" id="idType" name="idType" [(ngModel)]="idType" (change)="onChange()">
+                    <option *ngFor="let type of types" value="{{type.idType}}">
+                        {{type.nomType}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Id</th>
+                            <th>Destination</th>
+                            <th>Prix</th>
+                            <th>Date Excursion</th>
+                            <th>Heure de Depart</th>
+                            <th>Heure d 'Arrivé</th>
+                            <th>Lieu de Depart</th>
+                            <th>Type d'Excursion</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let excursion of excursions">
+                        <tr>
+                            <td>{{excursion.idExcursion}}</td>
+                            <td>{{excursion.distinationExcursion}}</td>
+                            <td>{{excursion.prixExcursion}}</td>
+                            <td>{{excursion.dateExcursion | date:'dd-MM-yyyy'}}</td>
+                            <td>{{excursion.heureDepart}}</td>
+                            <td>{{excursion.heureRetour}}</td>
+                            <td>{{excursion.lieuDepart}}</td>
+                            <td>{{excursion.type?.nomType}}</td>
+                            <td>
+                                <!-- Add your action buttons here -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Bootstrap JS and Popper.js scripts here -->
+    <script src="https://code.jquery.com/jquery-4.7.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

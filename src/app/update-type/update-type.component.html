@@ -1,0 +1,17 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<form>
+    <div [hidden]="ajout">
+        <label>ID Type</label>
+        <input type="text" [(ngModel)]="type.idType" name="idType" class="form-control w-25" id="idType">
+    </div>
+    <div class="form-group">
+        <label for="nomType">Nom Type</label>
+        <input type="text" [(ngModel)]="type.nomType" name="nomType" class="form-control" id="nomType" placeholder="Entrez un nom de type...">
+    </div>
+    <div class="form-group mt-2">
+        <button type="submit" [disabled]="!type.nomType" class="btn btn-success" (click)="saveType()">
+            {{ajout ? 'Ajouter' : 'Modifier'}} <i class="material-icons mr-2">add</i>
+        </button>
+    </div>
+</form>
