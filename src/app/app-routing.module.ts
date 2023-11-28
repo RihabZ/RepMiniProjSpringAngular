@@ -8,14 +8,15 @@ import { RechercheParDistinationComponent } from './recherche-par-distination/re
 import { ListeTypesComponent } from './liste-types/liste-types.component';
 import { LoginComponent } from './login/login.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { ExcursionGuard } from './excursion.guard';
 const routes: Routes = [
   {path: "excursions", component : ExcursionsComponent},
-  {path: "add-excursion", component : AddExcursionComponent},
+  {path: "add-excursion", component : AddExcursionComponent, canActivate:[ExcursionGuard]},
   {path: "updateExcursion/:id", component: UpdateExcursionComponent},
   {path: "rechercheParType", component : RechercheParTypeComponent},
   {path: "rechercheParDistination", component : RechercheParDistinationComponent},
   {path: "listeTypes", component : ListeTypesComponent},
-  {path: 'app-forbidden', component: ForbiddenComponent},
+  {path: 'appForbidden', component: ForbiddenComponent},
   {path: 'login', component: LoginComponent},
 
   { path: "", redirectTo: "excursions", pathMatch: "full" }

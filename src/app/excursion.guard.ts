@@ -1,7 +1,14 @@
-import { ActivatedRouteSnapshot, CanActivate, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Observable } from 'rxjs';
 import { AuthService } from './services/auth.service';
 
+@Injectable({
+  providedIn: 'root'
+})
+
 export class ExcursionGuard implements CanActivate {
+
   constructor (private authService: AuthService,
   private router : Router) {}
   canActivate(
@@ -11,7 +18,7 @@ export class ExcursionGuard implements CanActivate {
   return true;
   else
   {
-  this.router.navigate(['app-forbidden']);
+  this.router.navigate(['appForbidden']);
   return false;
   }
   }

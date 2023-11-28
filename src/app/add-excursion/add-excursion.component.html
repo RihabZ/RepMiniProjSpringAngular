@@ -70,6 +70,21 @@
         </select>
         </div>
         </div> 
+
+        <div class="form-group">
+            <label >Image :</label>
+            <div class="relative">
+                <input type="file" (change)="onImageUpload($event)"
+                    name="logo" class="form-control"> 
+        </div>
+            </div>
+            
+            <div *ngIf="imagePath!=null"  class="form-group">
+
+    <img [src]="imagePath" class="card-img-top img-fluid rounded-start"
+    style="width: 500px; height: 300px" />
+    </div>
+
     <div class="form-group">
         <div class="tright">
           <button class="btn btn-warning" type="reset"><i class="fa fa-fw fa-refresh"></i> Reset</button>

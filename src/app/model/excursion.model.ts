@@ -1,5 +1,5 @@
 import { Type } from "./type.model";
-
+import { Image } from "./image.model";
 export class Excursion {
     idExcursion? : number;
     distinationExcursion? : string;
@@ -9,6 +9,9 @@ export class Excursion {
     heureRetour?: string;
 	lieuDepart?: string;
     description?:string;
-    type?:Type
+    type?:Type;
+    image? : Image;
+    imageStr?:string;
+    images?: Image[];
 	
 }

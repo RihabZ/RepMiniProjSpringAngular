@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { apiURL } from '../config';
 import { TypeWrapper } from '../model/typeWrapped.model';
-
+import { AuthService } from './auth.service';
+import {Image} from '../model/image.model';
 
 const  httpOptions = {
   headers: new HttpHeaders( {'Content-Type': 'application/json'} )
@@ -15,13 +16,14 @@ const  httpOptions = {
 })
 
 export class ExcursionService {
-
+        myImage! : string;
         apiURL: string = 'http://localhost:8086/excursions/api';
         apiURLCat: string = 'http://localhost:8086/excursions/type';
         excursions: Excursion[] =[]; 
         //types : Type[];
       
-        constructor(private http : HttpClient) {
+        constructor(private http : HttpClient, 
+                    private authService: AuthService) {
         }
        
   // this.types = [ {idType : 1, nomType : "Green Randoo"},
@@ -34,21 +36,28 @@ export class ExcursionService {
     ];*/
   
 
-listeExcursion(): Observable<Excursion[]>
-{
+    listeExcursion(): Observable<Excursion[]>{
+      
+      return this.http.get<Excursion[]>(this.apiURL+"/all");
+      }
 
-      return this.http.get<Excursion[]>(apiURL);
-}
 
 ajouterExcursion( ex: Excursion):Observable<Excursion>
 {
-  return this.http.post<Excursion>(apiURL, ex, httpOptions);
-  }
+  let jwt = this.authService.getToken();
+    jwt = "Bearer "+jwt;
+  let httpHeaders = new HttpHeaders({"Authorization":jwt})
+    return this.http.post<Excursion>(apiURL+"/addex", ex, {headers:httpHeaders});
+}
+  
 
 
   supprimerExcursion(id : number) {
-    const url = `${apiURL}/${id}`;
-    return this.http.delete(url, httpOptions);
+    const url = `${apiURL}/delex/${id}`;
+      let jwt = this.authService.getToken();
+      jwt = "Bearer "+jwt;
+        let httpHeaders = new HttpHeaders({"Authorization":jwt})
+    return this.http.delete(url, {headers:httpHeaders});
     }
     
     //ou Bien
@@ -60,8 +69,11 @@ ajouterExcursion( ex: Excursion):Observable<Excursion>
     
 
     consulterExcursion(id: number): Observable<Excursion> {
-      const url = `${apiURL}/${id}`;
-      return this.http.get<Excursion>(url);
+      const url = `${apiURL}/getbyid/${id}`;
+        let jwt = this.authService.getToken();
+        jwt = "Bearer "+jwt;
+        let httpHeaders = new HttpHeaders({"Authorization":jwt})
+      return this.http.get<Excursion>(url, {headers:httpHeaders});
       }
       
       trierExcursions(){
@@ -78,27 +90,31 @@ ajouterExcursion( ex: Excursion):Observable<Excursion>
 
 
         updateExcursion(ex :Excursion) : Observable<Excursion>
-        {
-              return this.http.put<Excursion>(apiURL, ex, httpOptions);
+        {         let jwt = this.authService.getToken();
+          jwt = "Bearer "+jwt;
+          let httpHeaders = new HttpHeaders({"Authorization":jwt})
+              return this.http.put<Excursion>(apiURL +"/updateex", ex,  {headers:httpHeaders});
         }
-       
       //   consulterType(id:number): Type{
       //     return this.types.find(type => type.idType == id)!;
       //     }
 
       listeTypes():Observable<TypeWrapper>{
-        return this.http.get<TypeWrapper>(this.apiURLCat);
+        let jwt = this.authService.getToken();
+        jwt = "Bearer "+jwt;
+        let httpHeaders = new HttpHeaders({"Authorization":jwt})
+        return this.http.get<TypeWrapper>(this.apiURLCat,{headers:httpHeaders});
         }
 
 
 
   rechercherParType(idType: number): Observable<Type[]> {
-    const url = `${this.apiURL}/exstype/${idType}`;
+    const url = `${apiURL}/exstype/${idType}`;
     return this.http.get<Type[]>(url);
   }
 
   rechercherParDistination(distination: string): Observable<Excursion[]> {
-    const url = `${this.apiURL}/exsByDistination/${distination}`; // Assurez-vous que le chemin est correct
+    const url = `${apiURL}/exsByDistination/${distination}`; // Assurez-vous que le chemin est correct
     return this.http.get<Excursion[]>(url);
     }
 
@@ -107,7 +123,36 @@ ajouterExcursion( ex: Excursion):Observable<Excursion>
       }
       
 
+      uploadImage(file: File, filename: string): Observable<Image>{
+        const imageFormData = new FormData();
+        imageFormData.append('image', file, filename);
+        const url = `${apiURL + '/image/upload'}`;
+        return this.http.post<Image>(url, imageFormData);
+        }
+        loadImage(id: number): Observable<Image> {
+        const url = `${apiURL + '/image/get/info'}/${id}`;
+        return this.http.get<Image>(url);
+        }
 
+          
+   uploadImageEx(file: File, filename: string, idEx:number): Observable<any>{
+          const imageFormData = new FormData();
+          imageFormData.append('image', file, filename);
+          const url = `${apiURL + '/image/uplaodImageEx'}/${idEx}`;
+          return this.http.post(url, imageFormData);
+          }
+                 
+  supprimerImage(id: number) {
+    const url = `${this.apiURL}/image/delete/${id}`;
+    return this.http.delete(url, httpOptions);
+  }
 
+  uploadImageFS(file: File, filename: string, idProd : number): Observable<any>{
+    const imageFormData = new FormData();
+    imageFormData.append('image', file, filename);
+    const url = `${apiURL + '/image/uploadFS'}/${idProd}`;
+    return this.http.post(url, imageFormData);
+    }
+    
 
 }
