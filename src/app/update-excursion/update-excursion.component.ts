@@ -55,26 +55,7 @@ export class UpdateExcursionComponent {
                         });
                     }
         */
-       /* hedhy jdida mt3 tp ana bedltha beli ta7tha mn heithem
-                    ngOnInit(): void {
-                      this.excursionService.listeTypes().subscribe(types => {
-                        this.types = types._embedded.types;
-                      });
-                    
-                      this.excursionService.consulterExcursion(this.activatedRoute.snapshot.params['id']).subscribe(ex => {
-                        this.currentExcursion = ex;
-                        
-                        if (ex.type) {
-                          this.updatedTypeId = ex.type.idType;
-                       
-                       
-                        } else {
-                          // Gérer le cas où 'ex.type' est undefined
-                          console.error("Le type de l'excursion est undefined.");
-                        }
-                      });
-                    }
-                 */    
+     
 
     ngOnInit() {
      this.excursionService.listeTypes().subscribe(types => {
@@ -95,42 +76,6 @@ export class UpdateExcursionComponent {
                         }
                       });
                     }
-                    
-      //  this.updatedTypeId = this.currentExcursion.type?.idType ;
-
-       
-      //}  );
-    //}
-    
-    
-  
- /*
-  ngOnInit(): void {
-    this.excursionService.listeTypes()
-      .subscribe(types => {
-        this.types = types._embedded.types;
-      });
-  
-    this.excursionService.consulterExcursion(this.activatedRoute.snapshot.params['id'])
-      .subscribe(ex => {
-        this.currentExcursion = ex;
-  
-        // Vérifier si 'type' est défini avant d'accéder à 'idType'
-        if (ex.type) {
-          this.updatedTypeId = ex.type.idType;
-        } else {
-          // Gérer le cas où 'type' est indéfini
-          console.error("Type is undefined in the current excursion.");
-          // Vous pouvez définir une valeur par défaut ou prendre une autre action appropriée ici.
-        }
-      });
-    }
-      */
-  
-  
-
-
-
 
 /*
   onAddImageExcursion() {
@@ -179,110 +124,7 @@ onImageUpload(event: any) {
   }
   }                 
   
-//hedhya commtitha tw
-/*updateExcursion(): void {
-   // Vérifiez si 'this.currentExcursion' est défini
-   if (!this.currentExcursion) {
-    console.error("L'excursion actuelle est undefined.");
-    // Gérer le cas où 'this.currentExcursion' est indéfini
-    return;
-  }
 
-  // Assurez-vous que 'this.updatedTypeId' est défini
-  if (this.updatedTypeId === undefined) {
-    console.error("L'ID du type mis à jour est undefined.");
-    // Gérer le cas où 'this.updatedTypeId' est indéfini
-    return;
-  }
-
-  // Mettez à jour le type de l'excursion
-      this.currentExcursion.type = this.types.find(type => type.idType ==
-      this.updatedTypeId)!;
-       // Vérifiez si l'image est mise à jour
-  if (this.isImageUpdated) {
-    this.excursionService.uploadImage(this.uploadedImage, this.uploadedImage.name)
-      .subscribe((img: Image) => {
-
-        // Assurez-vous que 'this.currentExcursion' est défini
-        if (!this.currentExcursion) {
-          console.error("L'excursion actuelle est undefined après la mise à jour de l'image.");
-          // Gérer le cas où 'this.currentExcursion' est indéfini après la mise à jour de l'image
-          return;
-        }
-        this.currentExcursion.image = img;
-          // Mettez à jour l'excursion après la mise à jour de l'image
-      this.excursionService
-      .updateExcursion(this.currentExcursion)
-      .subscribe((ex) => {
-      this.router.navigate(['excursions']);
-      });
-    });
-  }
-  else{// Mettez à jour l'excursion si l'image n'est pas mise à jour
- this.excursionService.updateExcursion(this.currentExcursion).subscribe(ex => {
-       this.router.navigate(['excursions']); 
-      });
-    }
-  }
-*/
-/* //a5er wa7da commentitha
-updateExcursion(): void {
-  // Vérifiez si 'this.currentExcursion' est défini
-  if (!this.currentExcursion) {
-    console.error("L'excursion actuelle est undefined.");
-    // Gérer le cas où 'this.currentExcursion' est indéfini
-    return;
-  }
-
-  // Assurez-vous que 'this.updatedTypeId' est défini
-  if (this.updatedTypeId === undefined) {
-    console.error("L'ID du type mis à jour est undefined.");
-    // Gérer le cas où 'this.updatedTypeId' est indéfini
-    return;
-  }
-
-  // Mettez à jour le type de l'excursion
-  this.currentExcursion.type = this.types.find(type => type.idType == this.updatedTypeId);
-
-  // Vérifiez si 'this.currentExcursion.type' est défini
-  if (!this.currentExcursion.type) {
-    console.error("Le type de l'excursion est undefined.");
-    // Gérer le cas où 'this.currentExcursion.type' est indéfini
-    return;
-  }
-
-  // Mettez à jour l'excursion
-  this.excursionService.updateExcursion(this.currentExcursion).subscribe(marque => {
-    this.router.navigate(['excursions']);
-  });
-
-  // Vérifiez si l'image est mise à jour
-  if (this.isImageUpdated) {
-    this.excursionService.uploadImage(this.uploadedImage, this.uploadedImage.name)
-      .subscribe((img: Image) => {
-        // Assurez-vous que 'this.currentExcursion' est défini
-        if (!this.currentExcursion) {
-          console.error("L'excursion actuelle est undefined après la mise à jour de l'image.");
-          // Gérer le cas où 'this.currentExcursion' est indéfini après la mise à jour de l'image
-          return;
-        }
-
-        this.currentExcursion.image = img;
-
-        // Mettez à jour l'excursion après la mise à jour de l'image
-        this.excursionService.updateExcursion(this.currentExcursion).subscribe((ex) => {
-          this.router.navigate(['excursions']);
-        });
-      });
-  } else {
-    // Mettez à jour l'excursion si l'image n'est pas mise à jour
-    this.excursionService.updateExcursion(this.currentExcursion).subscribe((ex) => {
-      this.router.navigate(['excursions']);
-    });
-  }
-}
-
-*/
 
 
       supprimerImage(img: Image) {

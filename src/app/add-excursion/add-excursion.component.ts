@@ -25,43 +25,17 @@ export class AddExcursionComponent implements   OnInit{
             private router :Router) { }
 
 
-            ngOnInit(): void {
-              this.excursionService.listeTypes().subscribe(types => {
-                this.types = types._embedded.types;
-                console.log(types);
-                
-                
+    ngOnInit(): void {
+    this.excursionService.listeTypes().subscribe(types => {
+        this.types = types._embedded.types;
+          console.log(types);
+               
               });
               }
               
-         /*   addExcursion(){
-              this.newExcursion.type = this.types.find(type => type.idType == this.newIdType)!;
-                  this.excursionService.ajouterExcursion(this.newExcursion)
-                .subscribe(ex => {
-                              console.log(ex);
-                              this.message= " Excursion " +this.newExcursion.distinationExcursion +"Your message has been successfully sent !"
-                              this.router.navigate(['excursions']);
-});
-}
-           */
- /*       
-addExcursion() {
-  this.newExcursion.type = this.types.find(type => type.idType == this.newIdType)!;
-  
-  this.excursionService.ajouterExcursion(this.newExcursion).subscribe((ex) => {
-    if (ex.idExcursion !== undefined) { // Vérification que idExcursion n'est pas undefined
-      this.excursionService
-        .uploadImageFS(this.uploadedImage, this.uploadedImage.name, ex.idExcursion)
-        .subscribe((response: any) => {
-          // Traitement après le chargement de l'image
-        });
-      this.router.navigate(['excursions']);
-    }
-  });
-}
-*/
+      
 //mr
-  addExcursion() {// mt3 heithem
+  addExcursion() {
 
     this.excursionService
       .uploadImage(this.uploadedImage, this.uploadedImage.name)//apelede uplode et le transmettre l'img choisi qui applle l api et ajouter img au bdd w trej3 objt de type img :img
@@ -77,10 +51,6 @@ addExcursion() {
 
   }
   
-
-
-
-
 onImageUpload(event: any) {
      this.uploadedImage = event.target.files[0];
   var reader = new FileReader();// pour lire l'image à partir de uploadimage
