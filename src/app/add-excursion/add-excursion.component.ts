@@ -26,8 +26,9 @@ export class AddExcursionComponent implements   OnInit{
 
 
             ngOnInit(): void {
-              this.excursionService.listeTypes().subscribe(types => {console.log(types);
+              this.excursionService.listeTypes().subscribe(types => {
                 this.types = types._embedded.types;
+                console.log(types);
                 
                 
               });
@@ -43,7 +44,7 @@ export class AddExcursionComponent implements   OnInit{
 });
 }
            */
-        
+ /*       
 addExcursion() {
   this.newExcursion.type = this.types.find(type => type.idType == this.newIdType)!;
   
@@ -58,22 +59,28 @@ addExcursion() {
     }
   });
 }
-
-/*
-addExcursion() {
-
-  this.excursionService
-  .uploadImageFS(this.uploadedImage, this.uploadedImage.name, ex.idExcursion)
-  .subscribe((img: Image) => {
-  this.newExcursion.image=img;
-  this.newExcursion.type= this.types.find(type => type.idType == this.newIdType)!;
-  this.excursionService
-  .ajouterExcursion(this.newExcursion)
-  this.router.navigate(['excursions']);
-  });
-  
-}
 */
+//mr
+  addExcursion() {// mt3 heithem
+
+    this.excursionService
+      .uploadImage(this.uploadedImage, this.uploadedImage.name)//apelede uplode et le transmettre l'img choisi qui applle l api et ajouter img au bdd w trej3 objt de type img :img
+      .subscribe((img: Image) => {
+        this.newExcursion.image = img;// affectation
+        this.newExcursion.type = this.types.find(type => type.idType == this.newIdType)!;//affecter cat zeda
+        this.excursionService
+          .ajouterExcursion(this.newExcursion)
+          .subscribe(() => {
+            this.router.navigate(['excursions']);
+          });
+      });
+
+  }
+  
+
+
+
+
 onImageUpload(event: any) {
      this.uploadedImage = event.target.files[0];
   var reader = new FileReader();// pour lire l'image à partir de uploadimage

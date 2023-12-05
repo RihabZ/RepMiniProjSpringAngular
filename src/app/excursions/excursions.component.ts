@@ -25,26 +25,34 @@ export class ExcursionsComponent implements OnInit {
     
     this.chargerExcursions();
 
-  }/*
+  }
+
   chargerExcursions() {
     this.excursionService.listeExcursion().subscribe(ex => {
       // console.log(ex);
       this.excursions = ex;
   
       this.excursions.forEach((ex) => {
-        if (ex.images && ex.images.length > 0) {
-          ex.imageStr = 'data:' + ex.images[0].type + ';base64,' + ex.images[0].image;
+        // Check if ex.image is defined before trying to access its properties
+        if (ex.image) {
+          this.excursionService
+            .loadImage(ex.image.idImage)
+            .subscribe((img: Image) => {
+              // Use img instead of ex.images
+              ex.imageStr = 'data:' + img.type + ';base64,' + img.image;
+            });
         }
       });
     });
   }
-  */
+  
+ /*
   chargerExcursions(){
     this.excursionService.listeExcursion().subscribe(exs => {
     this.excursions = exs;
     });
     }
-  
+  */
     supprimerExcursion(e: Excursion)
     {
     let conf = confirm("Etes-vous sûr ?");

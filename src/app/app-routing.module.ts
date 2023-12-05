@@ -19,7 +19,7 @@ const routes: Routes = [
   {path: 'appForbidden', component: ForbiddenComponent},
   {path: 'login', component: LoginComponent},
 
-  { path: "", redirectTo: "excursions", pathMatch: "full" }
+  { path: "", redirectTo: "login", pathMatch: "full" }
 
 ];
 

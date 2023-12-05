@@ -70,9 +70,8 @@
  <td>{{excursion.type?.nomType}}</td> 
  <td><img class="card-img-top img-responsive"
    
-    src="{{apiurl+'/image/loadfromFS/'+excursion.idExcursion}}"
-
-    style = "height :50px;width:100px">
+    src = "{{excursion.imageStr}}"
+style = "height :50px;width:100px">
     </td>
  <td>
    <a *ngIf="authService.isAdmin()"

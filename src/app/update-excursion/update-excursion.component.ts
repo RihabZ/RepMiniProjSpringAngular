@@ -24,8 +24,8 @@ export class UpdateExcursionComponent {
                     private excursionService: ExcursionService) { }
                   
                   
-                  
-      /*   ngOnInit(): void {
+    /*              
+      ngOnInit(): void {
                 this.excursionService.listeTypes().subscribe(types => {
                 this.types = types._embedded.types;
                   console.log(types);
@@ -55,7 +55,7 @@ export class UpdateExcursionComponent {
                         });
                     }
         */
-       /*
+       /* hedhy jdida mt3 tp ana bedltha beli ta7tha mn heithem
                     ngOnInit(): void {
                       this.excursionService.listeTypes().subscribe(types => {
                         this.types = types._embedded.types;
@@ -74,31 +74,64 @@ export class UpdateExcursionComponent {
                         }
                       });
                     }
-                 */        
+                 */    
 
-                    ngOnInit() {
-                      this.excursionService.listeTypes().subscribe(types => {
-                        this.types = types._embedded.types;
+    ngOnInit() {
+     this.excursionService.listeTypes().subscribe(types => {
+     this.types = types._embedded.types;
                         console.log(types);
                       });
+             const excursionId = this.activatedRoute.snapshot.params['id'];
                     
-                      const excursionId = this.activatedRoute.snapshot.params['id'];
-                    
-                      this.excursionService.consulterExcursion(excursionId).subscribe(marque => {
-                        this.currentExcursion = marque;
-                    
-                        if (this.currentExcursion) {
-                          this.updatedTypeId = this.currentExcursion.type?.idType || 0;
-                    
-                          if (this.currentExcursion.image) {
-                            this.excursionService.loadImage(this.currentExcursion.image.idImage).subscribe((img: Image) => {
+                      this.excursionService.consulterExcursion(excursionId).subscribe(ex => {
+                        this.currentExcursion = ex;
+                        this.updatedTypeId = ex.type?.idType;
+                        if (this.currentExcursion && this.currentExcursion.image && this.currentExcursion.image.idImage) {
+                          this.excursionService
+                            .loadImage(this.currentExcursion.image.idImage)
+                            .subscribe((img: Image) => {
                               this.myImage = 'data:' + img.type + ';base64,' + img.image;
                             });
-                          }
                         }
                       });
                     }
                     
+      //  this.updatedTypeId = this.currentExcursion.type?.idType ;
+
+       
+      //}  );
+    //}
+    
+    
+  
+ /*
+  ngOnInit(): void {
+    this.excursionService.listeTypes()
+      .subscribe(types => {
+        this.types = types._embedded.types;
+      });
+  
+    this.excursionService.consulterExcursion(this.activatedRoute.snapshot.params['id'])
+      .subscribe(ex => {
+        this.currentExcursion = ex;
+  
+        // Vérifier si 'type' est défini avant d'accéder à 'idType'
+        if (ex.type) {
+          this.updatedTypeId = ex.type.idType;
+        } else {
+          // Gérer le cas où 'type' est indéfini
+          console.error("Type is undefined in the current excursion.");
+          // Vous pouvez définir une valeur par défaut ou prendre une autre action appropriée ici.
+        }
+      });
+    }
+      */
+  
+  
+
+
+
+
 /*
   onAddImageExcursion() {
     if (this.currentExcursion && this.currentExcursion.idExcursion !== undefined) {
@@ -117,12 +150,13 @@ export class UpdateExcursionComponent {
     }
   }
 */
-
+/*
 onAddImageExcursion() {
   this.excursionService
-    .uploadImageEx(this.uploadedImage, this.uploadedImage.name, this.updatedTypeId = this.currentExcursion.type?.idType || 0)
+    .uploadImageEx(this.uploadedImage, this.uploadedImage.name, this.updatedTypeId = this.currentExcursion?.type?.idType || 0)
     .subscribe((img: Image) => {
       if (this.currentExcursion) {
+        // Vérifiez si 'images' est défini, sinon initialisez-le
         if (!this.currentExcursion.images) {
           this.currentExcursion.images = [];
         }
@@ -131,83 +165,124 @@ onAddImageExcursion() {
     });
 }
 
+*/
                     
 
 
-   onImageUpload(event: any) {
-      if(event.target.files && event.target.files.length) {
-      this.uploadedImage = event.target.files[0];
-         this.isImageUpdated =true;
-      const reader = new FileReader();
-       reader.readAsDataURL(this.uploadedImage);
-        reader.onload = () => { this.myImage = reader.result as string; };
-                      }
-                      }
-  /*             
-   updateExcursion() {
-   this.currentExcursion.type = this.types.find(type => type.idType == this.updatedTypeId)!;
-    //tester si l'image du produit a été modifiée
+onImageUpload(event: any) {
+  if(event.target.files && event.target.files.length) {
+  this.uploadedImage = event.target.files[0];
+  this.isImageUpdated =true;
+  const reader = new FileReader();
+  reader.readAsDataURL(this.uploadedImage);
+  reader.onload = () => { this.myImage = reader.result as string; };
+  }
+  }                 
+  
+//hedhya commtitha tw
+/*updateExcursion(): void {
+   // Vérifiez si 'this.currentExcursion' est défini
+   if (!this.currentExcursion) {
+    console.error("L'excursion actuelle est undefined.");
+    // Gérer le cas où 'this.currentExcursion' est indéfini
+    return;
+  }
 
-    if (this.isImageUpdated)
-    {
-    this.excursionService
-    .uploadImage(this.uploadedImage, this.uploadedImage.name)
-    .subscribe((img: Image) => {
-    this.currentExcursion.image = img;
-    this.excursionService
-    .updateExcursion(this.currentExcursion)
-    .subscribe((ex) => {
-    this.router.navigate(['excursions']);
-    });
-    });
-    }
-    else{
-   this.excursionService.updateExcursion(this.currentExcursion).subscribe(ex => {
-         this.router.navigate(['excursions']); 
-        });
-      }
-    }*/
+  // Assurez-vous que 'this.updatedTypeId' est défini
+  if (this.updatedTypeId === undefined) {
+    console.error("L'ID du type mis à jour est undefined.");
+    // Gérer le cas où 'this.updatedTypeId' est indéfini
+    return;
+  }
 
-  /*  updateExcursion() {
+  // Mettez à jour le type de l'excursion
       this.currentExcursion.type = this.types.find(type => type.idType ==
       this.updatedTypeId)!;
+       // Vérifiez si l'image est mise à jour
+  if (this.isImageUpdated) {
+    this.excursionService.uploadImage(this.uploadedImage, this.uploadedImage.name)
+      .subscribe((img: Image) => {
+
+        // Assurez-vous que 'this.currentExcursion' est défini
+        if (!this.currentExcursion) {
+          console.error("L'excursion actuelle est undefined après la mise à jour de l'image.");
+          // Gérer le cas où 'this.currentExcursion' est indéfini après la mise à jour de l'image
+          return;
+        }
+        this.currentExcursion.image = img;
+          // Mettez à jour l'excursion après la mise à jour de l'image
       this.excursionService
       .updateExcursion(this.currentExcursion)
       .subscribe((ex) => {
       this.router.navigate(['excursions']);
       });
-      }
+    });
+  }
+  else{// Mettez à jour l'excursion si l'image n'est pas mise à jour
+ this.excursionService.updateExcursion(this.currentExcursion).subscribe(ex => {
+       this.router.navigate(['excursions']); 
+      });
+    }
+  }
 */
-
+/* //a5er wa7da commentitha
 updateExcursion(): void {
-  this.currentExcursion.type = this.types.find(type => type.idType == this.updatedTypeId)!;
-  if (this.currentExcursion.type) {
-    this.excursionService.updateExcursion(this.currentExcursion).subscribe(marque => {
+  // Vérifiez si 'this.currentExcursion' est défini
+  if (!this.currentExcursion) {
+    console.error("L'excursion actuelle est undefined.");
+    // Gérer le cas où 'this.currentExcursion' est indéfini
+    return;
+  }
+
+  // Assurez-vous que 'this.updatedTypeId' est défini
+  if (this.updatedTypeId === undefined) {
+    console.error("L'ID du type mis à jour est undefined.");
+    // Gérer le cas où 'this.updatedTypeId' est indéfini
+    return;
+  }
+
+  // Mettez à jour le type de l'excursion
+  this.currentExcursion.type = this.types.find(type => type.idType == this.updatedTypeId);
+
+  // Vérifiez si 'this.currentExcursion.type' est défini
+  if (!this.currentExcursion.type) {
+    console.error("Le type de l'excursion est undefined.");
+    // Gérer le cas où 'this.currentExcursion.type' est indéfini
+    return;
+  }
+
+  // Mettez à jour l'excursion
+  this.excursionService.updateExcursion(this.currentExcursion).subscribe(marque => {
+    this.router.navigate(['excursions']);
+  });
+
+  // Vérifiez si l'image est mise à jour
+  if (this.isImageUpdated) {
+    this.excursionService.uploadImage(this.uploadedImage, this.uploadedImage.name)
+      .subscribe((img: Image) => {
+        // Assurez-vous que 'this.currentExcursion' est défini
+        if (!this.currentExcursion) {
+          console.error("L'excursion actuelle est undefined après la mise à jour de l'image.");
+          // Gérer le cas où 'this.currentExcursion' est indéfini après la mise à jour de l'image
+          return;
+        }
+
+        this.currentExcursion.image = img;
+
+        // Mettez à jour l'excursion après la mise à jour de l'image
+        this.excursionService.updateExcursion(this.currentExcursion).subscribe((ex) => {
+          this.router.navigate(['excursions']);
+        });
+      });
+  } else {
+    // Mettez à jour l'excursion si l'image n'est pas mise à jour
+    this.excursionService.updateExcursion(this.currentExcursion).subscribe((ex) => {
       this.router.navigate(['excursions']);
     });
-    if (this.isImageUpdated)
-{this.excursionService
-.uploadImage(this.uploadedImage, this.uploadedImage.name)
-.subscribe((img: Image) => {
-this.currentExcursion.image = img;
-this.excursionService
-.updateExcursion(this.currentExcursion)
-.subscribe((ex) => {
-  this.router.navigate(['excursions']);
-});
-});
-}
-else{
-this.excursionService
-.updateExcursion(this.currentExcursion)
-.subscribe((ex) => {
-  this.router.navigate(['excursions']);
-});
-}
-
   }
 }
 
+*/
 
 
       supprimerImage(img: Image) {
@@ -225,29 +300,54 @@ this.excursionService
         } else {
           console.error("L'excursion actuelle est undefined.");
         }
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
       }
-      
+//mr
+  updateExcursion(): void {
 
+    this.currentExcursion.type = this.types.find(type => type.idType == this.updatedTypeId);
+    if (this.currentExcursion.type) {
+      this.excursionService.updateExcursion(this.currentExcursion).subscribe(excursion => {
+        this.router.navigate(['excursions']);
+      });
+      if (this.isImageUpdated) {
+        this.excursionService
+        .uploadImage(this.uploadedImage, this.uploadedImage.name)
+        .subscribe((img: Image) => {
+          this.currentExcursion.image = img;
+          this.excursionService
+            .updateExcursion(this.currentExcursion)
+            .subscribe((ex) => {
+              this.router.navigate(['excursions']);
+            });
+        });
+      }
+      else {
+        this.excursionService
+          .updateExcursion(this.currentExcursion)
+          .subscribe((ex) => {
+            this.router.navigate(['excursion']);
+          });
+      }
 
-
-
-
-
+    }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+

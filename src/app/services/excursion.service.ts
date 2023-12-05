@@ -126,27 +126,26 @@ ajouterExcursion( ex: Excursion):Observable<Excursion>
       uploadImage(file: File, filename: string): Observable<Image>{
         const imageFormData = new FormData();
         imageFormData.append('image', file, filename);
-        const url = `${apiURL + '/image/upload'}`;
+        const url = `${this.apiURL + '/image/upload'}`;
         return this.http.post<Image>(url, imageFormData);
         }
         loadImage(id: number): Observable<Image> {
-        const url = `${apiURL + '/image/get/info'}/${id}`;
+        const url = `${this. apiURL +'/image/get/info'}/${id}`;
         return this.http.get<Image>(url);
         }
-
           
-   uploadImageEx(file: File, filename: string, idEx:number): Observable<any>{
+  /* uploadImageEx(file: File, filename: string, idEx:number): Observable<any>{
           const imageFormData = new FormData();
           imageFormData.append('image', file, filename);
           const url = `${apiURL + '/image/uplaodImageEx'}/${idEx}`;
           return this.http.post(url, imageFormData);
           }
-                 
+    */             
   supprimerImage(id: number) {
     const url = `${this.apiURL}/image/delete/${id}`;
     return this.http.delete(url, httpOptions);
   }
-
+/*
   uploadImageFS(file: File, filename: string, idProd : number): Observable<any>{
     const imageFormData = new FormData();
     imageFormData.append('image', file, filename);
@@ -154,5 +153,5 @@ ajouterExcursion( ex: Excursion):Observable<Excursion>
     return this.http.post(url, imageFormData);
     }
     
-
+*/
 }
